@@ -1,0 +1,187 @@
+package character;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
+import main.CollisionChecker;
+import main.GamePanel;
+import main.KeyHandler;
+import main.UtilityTool;
+
+public class Player extends Entity {
+	
+	KeyHandler keyH;
+	GamePanel gp;
+	public int screenX,screenY;
+	public int keyCount = 0;
+	public int bootTimeCounter = 0;
+	int totalBoots = 0;
+	
+	public Player(GamePanel gp, KeyHandler keyH) {
+		super(gp);
+		this.keyH = keyH; 
+		this.gp = gp; 
+		setValues();
+		playerDefaultImage();
+	}
+	
+//	CollisionChecker cChecker = new CollisionChecker(gp);
+	
+	public void playerDefaultImage() {
+//		System.out.println("HELL");	
+			up1 = setup(up1,"/player/boy_up_1");
+			up2 = setup(up2,"/player/boy_up_2");
+			left1 = setup(left1,"/player/boy_left_1");
+			left2 =setup(left2,"/player/boy_left_2");
+			down1 = setup(down1,"/player/boy_down_1");
+			down2 = setup(down2,"/player/boy_down_2");
+			right1 = setup(right1,"/player/boy_right_1");
+			right2 = setup(right2,"/player/boy_right_2");
+
+	}
+	
+	public void setValues() {
+		//set accordingly like where to instantiate the character....don't forget difference between screenX and WorldX;
+		worldX = gp.newTileSize*23;
+		worldY = gp.newTileSize*21;
+		// set different params
+		speed = 4; 
+		direction ="down";
+		
+		//setting the solid boundary		
+		SolidBody = new Rectangle();
+		SolidBody.x = 8;
+		SolidBody.y = 16;
+		SolidBodyDefaultX = SolidBody.x;
+		SolidBodyDefaultY = SolidBody.y;
+		SolidBody.width = 32;
+		SolidBody.height =32;
+		
+		screenX = gp.screenWidth/2 - gp.newTileSize/2;
+		screenY = gp.screenHeight/2 - gp.newTileSize/2;
+			
+	}
+	
+	public void update() {
+		if(keyH.upPressed==true||keyH.downPressed==true||keyH.leftPressed==true||keyH.rightPressed==true) {
+			if(keyH.upPressed==true) {
+				direction ="up";
+			}
+			else if(keyH.downPressed==true) {
+				direction ="down";
+			}
+			else if(keyH.leftPressed==true) {
+				direction ="left";
+			}
+			else if(keyH.rightPressed==true) {
+				direction = "right";
+			}
+			
+			
+			//collison of player with any tile(tree,wall..)
+			gp.cChecker.updateCollision(this);
+			//collision of player with the object
+			int index = gp.cChecker.objectCollision(this,true);
+			if(index!=-1) hitObject(index);
+			//collision of the object with the NPCs
+			index = gp.cChecker.PlayerToNpcCollision(this, gp.npc);
+			if(index!=-1) hitNpc(index);
+				
+			if(this.collision==false) {
+				if(direction == "up") {
+					worldY-=speed;
+				}else if (direction == "down") {
+					worldY+=speed;
+				}else if (direction == "left") {
+					worldX-=speed;
+				}else if(direction == "right") {
+					worldX+=speed;
+				}
+			}
+			
+			spriteCounter++;
+			if(spriteCounter>=10) {
+				spriteValue = 1 - spriteValue;
+				spriteCounter = 0;
+			}
+		}
+		
+		// to decrease the speed automatically after 10 sec;
+		bootTimeCounter++;
+		if(totalBoots>0) {
+			if(bootTimeCounter>=600) {
+				speed-=2;
+				totalBoots--;
+			}
+		}
+		
+	}
+	
+	public void hitObject(int ind) {
+			if(gp.obj[ind].name=="key") {
+				keyCount++;
+				gp.obj[ind]=null;
+				gp.soundSE(1);
+				gp.ui.showMessage("You got the key!");
+			}
+			else if(gp.obj[ind].name=="door") {
+				if(keyCount>0) {
+					gp.obj[ind]=null;
+					keyCount--;
+					gp.soundSE(2);
+					gp.ui.showMessage("Door Opened!");
+				}else gp.ui.showMessage("You need a key"); 
+			}else if(gp.obj[ind].name == "boots") {
+				gp.obj[ind]=null;
+				speed+=2;
+				bootTimeCounter = 0;
+				totalBoots++;
+				gp.soundSE(3);
+				gp.ui.showMessage("Speed UP!");
+			}else if(gp.obj[ind].name == "chest") {
+//				gp.obj[ind]=null;
+//				keyCount--;
+				gp.ui.gameFinished = true;
+				gp.stop();
+				gp.soundSE(4);
+				gp.ui.showMessage("You found the treasure!");
+//				gp.ui.showMessage("Congratulations"); 
+			}							
+	}
+	
+	public void hitNpc(int index) {
+		gp.gameState = gp.dialogueState; 
+	}
+	
+	public void draw(Graphics g2) {
+		
+//		g2.setColor(Color.white);
+//		g2.fillRect(x, y, gp.newTileSize, gp.newTileSize);
+//		g2.dispose();
+		BufferedImage image = null; 
+		
+		if(direction == "up") {
+			if(spriteValue==0) image = up1;
+			else image =up2;
+		}else if (direction == "down") {
+			if(spriteValue==0) image = down1;
+			else image =down2;
+		}else if (direction == "left") {
+			if(spriteValue==0) image = left1;
+			else image =left2;
+		}else if(direction == "right") {
+			if(spriteValue==0) image = right1;
+			else image =right2;
+		}
+//		System.out.println(right);
+		g2.drawImage(image,screenX,screenY,null);
+		
+	}
+	
+}

@@ -1,0 +1,3 @@
+spring.application.name=Movies-Api
+spring.data.mongodb.databses = movie-api-db
+spring.data.mongodb.uri = mongodb+srv://chaitanyaagrawal7:<password>@cluster0.tmo0u23.mongodb.net/

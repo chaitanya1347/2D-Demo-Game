@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="javax.swing.JPanel"/>
+    <fullyQualifiedTypeName name="java.awt.Dimension"/>
+    <fullyQualifiedTypeName name="java.awt.Graphics"/>
+    <fullyQualifiedTypeName name="java.lang.System"/>
+    <fullyQualifiedTypeName name="javax.swing.plaf.basic.BasicComboBoxUI.KeyHandler"/>
+    <fullyQualifiedTypeName name="main.KeyHandler"/>
+    <fullyQualifiedTypeName name="java.io.InputStreamReader"/>
+    <fullyQualifiedTypeName name="tiles.TileManager"/>
+    <fullyQualifiedTypeName name="character.Player"/>
+    <fullyQualifiedTypeName name="javax.imageio.ImageIO"/>
+    <fullyQualifiedTypeName name="java.io.IOException"/>
+    <fullyQualifiedTypeName name="object.SuperObject"/>
+    <fullyQualifiedTypeName name="object.OBJ_DOOR"/>
+    <fullyQualifiedTypeName name="object.OBJ_CHEST"/>
+    <fullyQualifiedTypeName name="main.CollisionChecker"/>
+    <fullyQualifiedTypeName name="javax.sound.sampled.Clip"/>
+    <fullyQualifiedTypeName name="java.net.URL"/>
+    <fullyQualifiedTypeName name="javax.sound.sampled.AudioSystem"/>
+    <fullyQualifiedTypeName name="javax.sound.sampled.AudioInputStream"/>
+    <fullyQualifiedTypeName name="object.OBJ_BOOTS"/>
+    <fullyQualifiedTypeName name="java.awt.Graphics2D"/>
+    <fullyQualifiedTypeName name="java.awt.Font"/>
+    <fullyQualifiedTypeName name="object.OBJ_KEY"/>
+    <fullyQualifiedTypeName name="java.text.DecimalFormat"/>
+    <fullyQualifiedTypeName name="main.UtilityTool"/>
+    <fullyQualifiedTypeName name="java.io.InputStream"/>
+    <fullyQualifiedTypeName name="main.GamePanel"/>
+    <fullyQualifiedTypeName name="java.awt.image.BufferedImage"/>
+    <fullyQualifiedTypeName name="object.OBJ_HEART"/>
+    <fullyQualifiedTypeName name="java.awt.Rectangle"/>
+    <fullyQualifiedTypeName name="java.awt.Color"/>
+    <fullyQualifiedTypeName name="character.Entity"/>
+    <fullyQualifiedTypeName name="object.OBJ_Shield_Normal"/>
+    <fullyQualifiedTypeName name="object.OBJ_Sword_Normal"/>
+</qualifiedTypeNameHistroy>
